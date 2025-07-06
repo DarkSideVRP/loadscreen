@@ -1,0 +1,134 @@
+/*
+                    ---------------------------------------------
+                    --      LOADSCREEN DESENVOLVIDA POR        --
+                    --          NUBLADO & DARKSIDE             --
+                    --            VENDA PROIBIDA               --
+                    --  CASO USAR A LOADSCREEN EM OPEN SOURCE  --
+                    --            ATRIBUIR CRÉDITOS            --
+                    --           EM ALGUM README.md            --
+                    --                                         --
+                    --        © DARKSIDE & NUBLADO 2025        --
+                    ---------------------------------------------
+*/
+
+
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.box {
+    width: 100%;
+    height: 100vh;
+    background-image: url(./images/background.jpg);
+    display: flex;
+    position: relative;
+}
+
+.logo {
+    width: 100px;
+    height: 100px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 8px;
+}
+
+.loading {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    font-family: 'Courier New', monospace;
+    font-size: 20px;
+    color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 2px solid white;
+    width: 0ch;
+    animation: typing 4s steps(25) infinite alternate, blink 0.7s step-end infinite;
+}
+
+  .box .music {
+    margin-bottom: 30px;
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    width: 315px;
+    background: #222;
+    color: white;
+    font-family: Arial, sans-serif;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.7);
+    padding: 12px;
+    display: flex;
+    gap: 12px;
+  }
+
+  .box .music .cover {
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+    border-radius: 6px;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .box .music .info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 14px;
+    user-select: none;
+  }
+
+  .box .music .info .title {
+    font-weight: bold;
+    margin-bottom: 2px;
+  }
+
+  .box .music .info .authors {
+    color: #ccc;
+    font-size: 12px;
+    margin-bottom: 6px;
+  }
+
+  .box .music .info .time {
+    font-size: 12px;
+    color: #aaa;
+  }
+
+  .box .music .controls {
+    display: flex;
+    gap: 10px;
+    margin-top: 8px;
+  }
+
+  .box .music button {
+    background: #444;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.2s;
+    user-select: none;
+  }
+
+  .box .music button:hover {
+    background: #666;
+  }
+
+
+  @keyframes typing {
+    0%   { width: 0ch; }
+    50%  { width: 25ch; }
+    100% { width: 0ch; }
+  }
+
+  @keyframes blink {
+    50% { border-color: transparent; }
+  }

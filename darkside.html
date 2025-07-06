@@ -1,0 +1,187 @@
+<!--
+                    ---------------------------------------------
+                    --      LOADSCREEN DESENVOLVIDA POR        --
+                    --          NUBLADO & DARKSIDE             --
+                    --            VENDA PROIBIDA               --
+                    --  CASO USAR A LOADSCREEN EM OPEN SOURCE  --
+                    --            ATRIBUIR CRÉDITOS            --
+                    --           EM ALGUM README.md            --
+                    --                                         --
+                    --        © DARKSIDE & NUBLADO 2025        --
+                    ---------------------------------------------
+-->
+
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="nui://game/ui/jquery.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="./theforce.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="fare"></div>
+
+     <div class="box">
+        <div class="logo">
+            <img class="logo" src="./images/logo.png" alt="LOGO DARKSIDE">
+        </div>
+
+        <div class="loading">
+            CARREGANDO RECURSOS...
+        </div>
+
+        <div class="music">
+
+        </div>
+</div>
+
+<script>
+  // Seu array de músicas (suporte para até 15)
+  const playlist = [
+    {
+      src: './songs/duas_da_manha.mp3',
+      title: 'Duas Da Manhã',
+      authors: 'DJ WAM BASTER',
+      cover: './images/duas_da_manha.jpg'
+    },
+    {
+      src: './songs/INNERBLOOM.mp3',
+      title: 'INNERBLOOM',
+      authors: 'VINICIUS CAVALCANTE',
+      cover: './images/innerbloom.jpg'
+    },
+    {
+      src: './songs/viver_o_momento.mp3',
+      title: 'VIVER O MOMENTO',
+      authors: 'DJ DANLIVE',
+      cover: './images/viver_o_momento.jpg'
+    },
+    {
+      src: './songs/pirocada.mp3',
+      title: 'PIROCADA QUENTE',
+      authors: 'MC JVILA MC NEGÃO ORIGINAL',
+      cover: './images/pirocada_quente.jpg'
+    },
+    {
+      src: './songs/tipo_nino.mp3',
+      title: 'TIPO NINO ABRAVANEL',
+      authors: 'DESCONHECIDO',
+      cover: './images/tipo_nino.jpg'
+    },
+    {
+      src: './songs/sc.mp3',
+      title: 'SANTA CATARINA PARAÍSO...',
+      authors: 'DESCONHECIDO',
+      cover: './images/sc.jpg'
+    },
+  ];
+
+  // Criar elementos dinamicamente dentro da div music
+  const musicDiv = document.querySelector('.box .music');
+
+  // Layout base da estrutura
+  musicDiv.innerHTML = `
+    <div class="cover"></div>
+    <div class="info">
+      <div class="title"></div>
+      <div class="authors"></div>
+      <div class="time">0:00 / 0:00</div>
+      <div class="controls">
+        <button id="prevBtn"><img src="./images/voltar.png" style="width: 15px; height: 15px;"></button>
+        <button id="playPauseBtn">Play</button>
+        <button id="nextBtn"><img src="./images/proximo.png" style="width: 15px; height: 15px;"></button>
+      </div>
+    </div>
+  `;
+
+  const coverEl = musicDiv.querySelector('.cover');
+  const titleEl = musicDiv.querySelector('.title');
+  const authorsEl = musicDiv.querySelector('.authors');
+  const timeEl = musicDiv.querySelector('.time');
+  const playPauseBtn = musicDiv.querySelector('#playPauseBtn');
+  const prevBtn = musicDiv.querySelector('#prevBtn');
+  const nextBtn = musicDiv.querySelector('#nextBtn');
+
+  let currentIndex = 0;
+  let isPlaying = false;
+
+  // Criar elemento de áudio
+  const audio = new Audio();
+  audio.crossOrigin = "anonymous";
+
+  function loadTrack(index) {
+    if (index < 0) index = playlist.length -1;
+    if (index >= playlist.length) index = 0;
+    currentIndex = index;
+
+    const track = playlist[currentIndex];
+    audio.src = track.src;
+    titleEl.textContent = track.title;
+    authorsEl.textContent = track.authors;
+    coverEl.style.backgroundImage = `url(${track.cover})`;
+    timeEl.textContent = `0:00 / 0:00`;
+    playPauseBtn.textContent = 'Play';
+    isPlaying = false;
+  }
+
+  function playTrack() {
+    audio.play();
+    isPlaying = true;
+    playPauseBtn.textContent = 'Pausar';
+  }
+
+  function pauseTrack() {
+    audio.pause();
+    isPlaying = false;
+    playPauseBtn.textContent = 'Play';
+  }
+
+  playPauseBtn.addEventListener('click', () => {
+    if (isPlaying) pauseTrack();
+    else playTrack();
+  });
+
+  prevBtn.addEventListener('click', () => {
+    loadTrack(currentIndex - 1);
+    playTrack();
+  });
+
+  nextBtn.addEventListener('click', () => {
+    loadTrack(currentIndex + 1);
+    playTrack();
+  });
+
+  // Atualiza o tempo da música (segundo atual / total)
+  audio.addEventListener('timeupdate', () => {
+    const current = Math.floor(audio.currentTime);
+    const total = Math.floor(audio.duration) || 0;
+
+    function formatTime(sec) {
+      const m = Math.floor(sec / 60);
+      const s = sec % 60;
+      return m + ':' + (s < 10 ? '0' + s : s);
+    }
+
+    timeEl.textContent = `${formatTime(current)} / ${formatTime(total)}`;
+  });
+
+  // Quando a música acaba, toca a próxima automaticamente
+  audio.addEventListener('ended', () => {
+    loadTrack(currentIndex + 1);
+    playTrack();
+  });
+
+  // Carregar a primeira música inicialmente
+  loadTrack(currentIndex);
+
+
+audio.play().catch(() => {
+  console.log('Erro ao tentar tocar o áudio automaticamente');
+});
+</script>
+    
+</body>
+</html>
